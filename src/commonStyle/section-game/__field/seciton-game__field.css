@@ -1,0 +1,7 @@
+.section-game__field {
+  display: grid;
+  grid-template-columns: repeat(4, 20%);
+  column-gap: 5%;
+  row-gap: 50px;
+
+}

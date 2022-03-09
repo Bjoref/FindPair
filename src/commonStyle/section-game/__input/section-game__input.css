@@ -1,0 +1,13 @@
+.section-game__input {
+  font-family: Redressed;
+  color: white;
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid crimson;
+}
+
+.section-game__input:focus-visible {
+  outline: none;
+}
+

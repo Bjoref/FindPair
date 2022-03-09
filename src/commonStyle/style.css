@@ -1,0 +1,22 @@
+
+@import url(/src/commonStyle/section-game/section-game.css);
+
+
+body {
+  font-family: 'Redressed', sans-serif;
+  background-color: black;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 25px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
