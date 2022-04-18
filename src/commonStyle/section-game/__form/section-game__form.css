@@ -1,11 +1,7 @@
 .section-game__form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  row-gap: 15px;
-}
-
-.section-game__error {
-  color: crimson;
-  font-size: 20px;
+  grid-row-gap: 10px;
 }

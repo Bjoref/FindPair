@@ -1,10 +1,10 @@
 
-@import url(/src/commonStyle/section-game/section-game.css);
+@import url(/src/commonStyle/section-game/section-game.css);;
 
 
 body {
   font-family: 'Redressed', sans-serif;
-  background-color: black;
+  background-color: white;
 }
 
 

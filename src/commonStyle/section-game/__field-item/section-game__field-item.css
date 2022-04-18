@@ -1,39 +1,35 @@
 .section-game__field-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 60px;
-  position: relative;
-  list-style-type: none;
-  height: 300px;
-  background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    position: relative;
+    list-style-type: none;
+    height: 100px;
+    background-color: red;
+    font-size: 0;
 }
-
-.section-game__field-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-image: url(/src/commonStyle/section-game/__field-item/img/backimage.png);
-  background-position: center;
-}
-
+  
 .Cover-remove.section-game__field-item::before {
-  content: '';
-  background-image: none;
+    content: '';
+    background-image: none;
 }
-
+  
 .section-game__field-item_clone {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 60px;
-  position: relative;
-  list-style-type: none;
-  height: 300px;
-  background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0;
+    position: relative;
+    list-style-type: none;
+    height: 100px;
+    background-color: red;
 }
 
+.Cover-remove {
+    font-size: 60px;
+}
 
+.section-game__field-item_error {
+    outline: 1px solid red;
+}

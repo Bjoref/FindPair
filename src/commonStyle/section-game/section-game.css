@@ -1,10 +1,8 @@
 @import url(/src/commonStyle/section-game/__container/section-game__container.css);
-@import url(/src/commonStyle/section-game/__head/section-game__head.css);
 @import url(/src/commonStyle/section-game/__timer/section-game__timer.css);
 @import url(/src/commonStyle/section-game/__form/section-game__form.css);
-@import url(/src/commonStyle/section-game/__label/section-game__label.css);
-@import url(/src/commonStyle/section-game/__button/section-game__button.css);
-@import url(/src/commonStyle/section-game/__input/section-game__input.css);
-@import url(/src/commonStyle/section-game/__field/seciton-game__field.css);
+@import url(/src/commonStyle/section-game/__field/section-game__field.css);
+@import url(/src/commonStyle/section-game/__error/section-game__error.css);
 @import url(/src/commonStyle/section-game/__field-item/section-game__field-item.css);
+
 

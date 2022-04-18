@@ -1,16 +1,7 @@
 .section-game__timer {
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  column-gap: 10px;
-  margin-bottom: 20px;
-  height: 200px;
-  width: 500px;
-  color: white;
-  font-size: 50px;
-}
-
-.section-game__timer-title {
-  margin: 0;
 }
