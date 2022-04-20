@@ -38,13 +38,17 @@ const shuffle = (array) => {
 } //алгоритм Фишера-Йетса
 
 const gameStart = (value) => {
-    let gameItem = document.createElement('li');
-    for(item=value; item > 0; item--) {
-        let cloneItem = gameItem;
-        cloneItem.textContent = item;
-        cloneItem.classList.add('seciton-game__field-item_clone');
-        gameField.appendChild(cloneItem)
-        console.log(cloneItem)
+    let items = []
+    while(value !== 0) {
+        console.log(value)
+        items.push(value)
+        console.log(items)
+        value -= 1;
+    }
+    for(let item = 0; item < items.length; item++) {
+        let gameItem = document.createElement('li');
+        gameItem.classList.add('seciton-game__field-item_clone')
+        gameField.appendChild(gameItem)
     }
 }
 
