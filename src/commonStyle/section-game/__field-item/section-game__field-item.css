@@ -7,23 +7,13 @@
     list-style-type: none;
     height: 100px;
     background-color: red;
-    font-size: 0;
+    font-size: 20px;
+    color: black;
 }
   
 .Cover-remove.section-game__field-item::before {
     content: '';
     background-image: none;
-}
-  
-.section-game__field-item_clone {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0;
-    position: relative;
-    list-style-type: none;
-    height: 100px;
-    background-color: red;
 }
 
 .Cover-remove {

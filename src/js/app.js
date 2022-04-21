@@ -40,16 +40,22 @@ const shuffle = (array) => {
 const gameStart = (value) => {
     let items = []
     while(value !== 0) {
-        console.log(value)
         items.push(value)
-        console.log(items)
+        items.push(value)
         value -= 1;
     }
+    shuffle(items)
+
     for(let item = 0; item < items.length; item++) {
         let gameItem = document.createElement('li');
-        gameItem.classList.add('seciton-game__field-item_clone')
-        gameField.appendChild(gameItem)
-    }
+        gameItem.classList.add('section-game__field-item');
+        gameField.appendChild(gameItem);
+        items.forEach((element) => {    
+            gameItem.textContent = element;
+            items.slice(element);
+            console.log(items)
+        });
+    };
 }
 
 gameForm.addEventListener("submit", (event) =>{
