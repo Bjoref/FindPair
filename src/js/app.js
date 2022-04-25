@@ -50,12 +50,14 @@ const gameStart = (value) => {
         let gameItem = document.createElement('li');
         gameItem.classList.add('section-game__field-item');
         gameField.appendChild(gameItem);
-        items.forEach((element) => {    
-            gameItem.textContent = element;
-            items.slice(element);
-            console.log(items)
-        });
     };
+
+    document.querySelectorAll('.section-game__field-item').forEach((element) => {
+        console.log(element)
+        element.textContent = items[0];
+        items.splice(0, 1);
+    });
+
 }
 
 gameForm.addEventListener("submit", (event) =>{
