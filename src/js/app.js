@@ -53,7 +53,6 @@ const gameStart = (value) => {
     };
 
     document.querySelectorAll('.section-game__field-item').forEach((element) => {
-        console.log(element)
         element.textContent = items[0];
         items.splice(0, 1);
     });
@@ -62,6 +61,12 @@ const gameStart = (value) => {
 
 gameForm.addEventListener("submit", (event) =>{
     event.preventDefault();
+    let itemsList = document.querySelectorAll('.section-game__field-item');
+    if(itemsList.length) {
+        itemsList.forEach((element) => {
+            element.parentNode.removeChild(element);
+        })
+    }
     if(mainInput.value !== '') {
         if(!inputValidator(mainInput)) {
             gameStart(mainInput.value);
@@ -73,4 +78,12 @@ gameForm.addEventListener("submit", (event) =>{
     if(verticalInput.value !== '') {
         inputValidator(mainInput)
     };
+    setTimeout(() => {
+        let gameItems = document.querySelectorAll('.section-game__field-item'); 
+        gameItems.forEach((element) => {
+            element.addEventListener('click', () => {
+                element.classList.toggle('Cover-remove')
+            })
+        })
+    }, 100);
 }); 
