@@ -1,23 +1,12 @@
 const arrayOfNumbers = []; //Массив с числами;
+const arrayOfAttempts = []; 
 const mainInput = document.querySelector('#section-game__input'); //Основной инпут
 const horizontalInput = document.querySelector('#section-game__horizontal'); //Инпут горизонтальный
 const verticalInput = document.querySelector('#section-game__vertical'); //Инпут вертикальный
 const errorFiled = document.querySelector('.section-game__error'); //Поле с ошибкой
 const gameForm = document.querySelector('.section-game__form'); //Форма
 const gameField = document.querySelector('.section-game__field'); //Игровое поле
-let limiter; 
-const pushingNumbersToArray = (inputValue_one, inputValue_two) => {
-    if(inputValue_one == 10 || inputValue_two == 10 ) {
-        limiter = inputValue_one * inputValue_two / 2
-    } else {
-        limiter = inputValue_one * inputValue_two 
-    }
-    for(i=1;i<=limiter;i++) {
-        for(a=0;a<2;a++){
-            arrayOfNumbers.push(i);
-        };
-    } 
-} //Пушим в массив нужные цифры
+let limiter;
 const inputValidator = (input) => {
     if (input.value < 2 || input.value > 10 || input.value % 2 !== 0) {
         input.value = "4";
@@ -39,6 +28,7 @@ const shuffle = (array) => {
 
 const gameStart = (value) => {
     let items = []
+    limiter = value;
     while(value !== 0) {
         items.push(value)
         items.push(value)
@@ -56,7 +46,6 @@ const gameStart = (value) => {
         element.textContent = items[0];
         items.splice(0, 1);
     });
-
 }
 
 gameForm.addEventListener("submit", (event) =>{
@@ -66,6 +55,9 @@ gameForm.addEventListener("submit", (event) =>{
         itemsList.forEach((element) => {
             element.parentNode.removeChild(element);
         })
+    }
+    if(mainInput.value == '' && horizontalInput.value == '' && verticalInput.value == '') {
+        mainInput.value = 4;
     }
     if(mainInput.value !== '') {
         if(!inputValidator(mainInput)) {
@@ -82,8 +74,38 @@ gameForm.addEventListener("submit", (event) =>{
         let gameItems = document.querySelectorAll('.section-game__field-item'); 
         gameItems.forEach((element) => {
             element.addEventListener('click', () => {
-                element.classList.toggle('Cover-remove')
-            })
-        })
+                if(!element.classList.contains('match')) {
+                    element.classList.add('Cover-remove');
+                    arrayOfNumbers.push(element);
+                } else {
+                    alert("Уже угадали :)");
+                }
+                if(arrayOfNumbers.length == 2) {
+                    if(arrayOfNumbers[0].textContent == arrayOfNumbers[1].textContent) {
+                        arrayOfNumbers.forEach((element) => {
+                            element.classList.add('match');
+                            element.classList.remove('section-game__field-item');
+                        });
+                        arrayOfAttempts.push('1')
+                        arrayOfNumbers.splice(0, 2);
+                    } else {
+                        setTimeout(() => {
+                            arrayOfNumbers.forEach((element) => {
+                                element.classList.toggle('Cover-remove')
+                            })
+                            arrayOfNumbers.splice(0, 2);
+                            alert('Не совпало :(')
+                        }, 200)
+                    };
+                };
+                setTimeout(() => {
+                    if(arrayOfAttempts.length == limiter) {
+                        alert('Отлично!')
+                        gameField.innerHTML = ''
+
+                    }
+                }, 200)
+            });
+        });
     }, 100);
 }); 
