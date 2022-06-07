@@ -11,22 +11,28 @@
     <link rel="stylesheet" href="src/commonStyle/style.css">
 
     <script src="/src/js/app.js" defer></script>
+    <script src="/src/js/overlay.js" defer></script>
 
 
 
 
 </head>
 <body>
+  <div class="overlay d-none">
+    <div class="overlay__modal">
+      <p class="overlay__text"> 
+        Увы, закончилось время :(
+      </p>
+      <button class="overlay__button">
+        Окей!
+      </button>
+    </div>
+  </div>
   <section class="section-game">
     <div class="container section-game__container">
       <div class="section-game__head">
         <div class="section-game__timer">
-          <h2 class="section-game__timer-title">
-            Timer:
-          </h2>
-          <span class="section-game__timer-number">
-            60
-          </span>
+          <div id="timer"></div>
         </div>
         <form class="section-game__form">
           <label class="section-game__label" for="section-game__input">

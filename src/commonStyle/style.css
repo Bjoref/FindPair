@@ -1,5 +1,6 @@
 
-@import url(/src/commonStyle/section-game/section-game.css);;
+@import url(/src/commonStyle/section-game/section-game.css);
+@import url(/src/commonStyle/overlay/overlay.css);
 
 
 body {
@@ -19,4 +20,12 @@ body {
 a {
   text-decoration: none;
   color: white;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex !important;
 }
