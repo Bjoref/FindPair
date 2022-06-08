@@ -16,6 +16,7 @@
 }
 
 .Cover-remove {
+    pointer-events: none;
     font-size: 60px;
 }
 

@@ -13,6 +13,8 @@ let limiter;
 let gameStarted = false;
 let wrongOptions = false;
 let gameOver = false;
+let timer = 59;
+timerShow.innerHTML = 60;
 const inputValidator = (input) => {
     if (input.value < 2 || input.value > 10 || input.value % 2 !== 0) {
         input.value = "4";
@@ -36,7 +38,8 @@ const shuffle = (array) => {
 const gameStart = (value) => {
     gameOver = false
     if(wrongOptions) {
-        return wrongOptions = false;
+      wrongOptions = false;
+      return
     }
     let items = []
     limiter = value;
@@ -58,28 +61,13 @@ const gameStart = (value) => {
         items.splice(0, 1);
     });
 }
-const timerFunction = (timer) => {
-    if (timer <= 0) {
-        clearInterval(timerCooldown);
-        gameOver = true
-        overlay.classList.remove("d-none");
-        overlay.classList.add("d-flex");
-      } else {
-        timerShow.innerHTML = timer;
-      }
-      --timer;
-};
 
 gameForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  timerShow.innerHTML = 60;
-  timer = 60;
-  let timerCooldown = setInterval(timerFunction(timer), 1000);
-  if (gameStarted) {
-    clearInterval(timerCooldown);
-    gameStarted = false;
+  timer = 59
+  while (gameField.firstChild) {
+    gameField.removeChild(gameField.firstChild);
   }
-  gameStarted = true;
+  event.preventDefault();
   let itemsList = document.querySelectorAll(".section-game__field-item");
   if (itemsList.length) {
     itemsList.forEach((element) => {
@@ -93,10 +81,30 @@ gameForm.addEventListener("submit", (event) => {
   ) {
     mainInput.value = 4;
   }
-  if (mainInput.value !== "") {
+  if (mainInput.value !== "" && !wrongOptions) {
     if (!inputValidator(mainInput)) {
       gameStart(mainInput.value);
+      const timerFunction = () => {
+        if (timer <= 0) {
+            clearInterval(timerCooldown);
+            gameOver = true
+            overlay.classList.remove("d-none");
+            overlay.classList.add("d-flex");
+            overlayText.textContent = 'Game Over!'
+          } else {
+            timerShow.innerHTML = timer;
+          }
+          --timer;
+    };  
+      let timerCooldown = setInterval(timerFunction, 1000);
+      if (gameStarted) {
+        clearInterval(timerCooldown);
+        gameStarted = false;
+      }
+      gameStarted = true;
     }
+  } else {
+    clearInterval(timerCooldown);
   }
   if (horizontalInput.value !== "") {
     inputValidator(mainInput);
@@ -112,7 +120,6 @@ gameForm.addEventListener("submit", (event) => {
           element.classList.add("Cover-remove");
           arrayOfNumbers.push(element);
         } else {
-            clearInterval(timerCooldown);
             overlay.classList.remove("d-none");
             overlay.classList.add("d-flex");
             overlayText.textContent = 'Уже угадали :)'
@@ -131,23 +138,13 @@ gameForm.addEventListener("submit", (event) => {
                 element.classList.toggle("Cover-remove");
               });
               arrayOfNumbers.splice(0, 2);
-              clearInterval(timerCooldown);
               overlay.classList.remove("d-none");
               overlay.classList.add("d-flex");
+              savedTimwe = timerShow.innerHTML - 1;
               overlayText.textContent = 'Не совпало :('
             }, 200);
           }
         }
-        setTimeout(() => {
-          console.log(limiter);
-          console.log(arrayOfAttempts.length);
-          if (arrayOfAttempts.length == limiter) {
-            overlay.classList.remove("d-none");
-            overlay.classList.add("d-flex");
-            overlayText.textContent = 'Отлично!'
-            gameField.innerHTML = "";
-          }
-        }, 200);
       });
     });
   }, 100);
