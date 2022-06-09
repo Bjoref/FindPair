@@ -1,21 +1,19 @@
-const arrayOfNumbers = []; //Массив с числами;
-const arrayOfAttempts = []; 
+const arrayOfNumbers = []; // Массив с числами;
+const arrayOfAttempts = []; //Массив попыток пользователя
 const mainInput = document.querySelector('#section-game__input'); //Основной инпут
-const horizontalInput = document.querySelector('#section-game__horizontal'); //Инпут горизонтальный
-const verticalInput = document.querySelector('#section-game__vertical'); //Инпут вертикальный
 const errorFiled = document.querySelector('.section-game__error'); //Поле с ошибкой
 const gameForm = document.querySelector('.section-game__form'); //Форма
 const gameField = document.querySelector('.section-game__field'); //Игровое поле
 const timerShow = document.getElementById("timer"); // Берём блок для показа времени
-const overlay = document.querySelector('.overlay');
-const overlayText = document.querySelector('.overlay__text');
-let limiter;
-let gameStarted = false;
-let wrongOptions = false;
-let gameOver = false;
-let timer = 59;
-timerShow.innerHTML = 60;
-const inputValidator = (input) => {
+const overlay = document.querySelector('.overlay'); // Определяем оверлей
+const overlayText = document.querySelector('.overlay__text'); // Определяём текст
+let limiter; //Ограничитель количества попыток
+let gameStarted = false; // Состояние "Игра началась"
+let wrongOptions = false; // Состояние "Наличие ошибок"
+let gameOver = false; // Состояние "Игра закончилась"
+let timer = 59; // Таймер
+timerShow.innerHTML = 60; // Отображение таймера
+const inputValidator = (input) => { // Валидатор инпута
     if (input.value < 2 || input.value > 10 || input.value % 2 !== 0) {
         input.value = "4";
         errorFiled.textContent = "Only even number between 2 and 10!"
@@ -27,15 +25,16 @@ const inputValidator = (input) => {
         wrongOptions = true
         return true;
     };
-};//Валидация инпута
-const shuffle = (array) => {
+};
+
+const shuffle = (array) => { //алгоритм Фишера-Йетса
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-} //алгоритм Фишера-Йетса
+}
 
-const gameStart = (value) => {
+const gameStart = (value) => { //Функция начала игры, которая перемешаивает значения карточек
     gameOver = false
     if(wrongOptions) {
       wrongOptions = false;
@@ -59,32 +58,28 @@ const gameStart = (value) => {
     document.querySelectorAll('.section-game__field-item').forEach((element) => {
         element.textContent = items[0];
         items.splice(0, 1);
-    });
-}
+      });
+    }
 
-gameForm.addEventListener("submit", (event) => {
-  timer = 59
-  while (gameField.firstChild) {
-    gameField.removeChild(gameField.firstChild);
-  }
-  event.preventDefault();
-  let itemsList = document.querySelectorAll(".section-game__field-item");
-  if (itemsList.length) {
-    itemsList.forEach((element) => {
-      element.parentNode.removeChild(element);
-    });
-  }
-  if (
-    mainInput.value == "" &&
-    horizontalInput.value == "" &&
-    verticalInput.value == ""
-  ) {
-    mainInput.value = 4;
-  }
-  if (mainInput.value !== "" && !wrongOptions) {
-    if (!inputValidator(mainInput)) {
-      gameStart(mainInput.value);
-      const timerFunction = () => {
+    
+    gameForm.addEventListener("submit", (event) => { // Функция, которая отрабатывает по нажатию кнопки сабмит
+      event.preventDefault(); //Прерываем дефолтное действие
+      timer = 59 // Перезадаём значение таймера, это нужно в том случае, если игрок ещё раз нажал на кнопку сабмита
+      while(arrayOfAttempts.length) { // Чистим массив попыток, чтобы при начале следующей игры он был пуст
+        arrayOfAttempts.forEach((element, index) => {
+          arrayOfAttempts.splice(index, 1);
+        })
+      }
+      while (gameField.firstChild) { // Убираем карточки для новой игры
+        gameField.removeChild(gameField.firstChild);
+      }
+      if ( //Если игрок ничего не написал в инпут, то дефолтное значение = 4
+      mainInput.value == ""
+      ) {
+        mainInput.value = 4;
+      }
+      const timerFunction = () => { //Функция, которая работает вместе с setInterval
+        console.log(gameStarted)
         if (timer <= 0) {
             clearInterval(timerCooldown);
             gameOver = true
@@ -95,22 +90,17 @@ gameForm.addEventListener("submit", (event) => {
             timerShow.innerHTML = timer;
           }
           --timer;
-    };  
-      let timerCooldown = setInterval(timerFunction, 1000);
-      if (gameStarted) {
+      };  
+  let timerCooldown = setInterval(timerFunction, 1000); //Запускаем наш таймер
+  if (mainInput.value !== "" && !wrongOptions) { //Если пнпут не пуст и нет ошибок
+    if (!inputValidator(mainInput)) { //Если значения отвалидировались, то начинаем игру
+      gameStart(mainInput.value);
+      if (gameStarted) { 
         clearInterval(timerCooldown);
-        gameStarted = false;
-      }
-      gameStarted = true;
+      } 
     }
   } else {
     clearInterval(timerCooldown);
-  }
-  if (horizontalInput.value !== "") {
-    inputValidator(mainInput);
-  }
-  if (verticalInput.value !== "") {
-    inputValidator(mainInput);
   }
   setTimeout(() => {
     let gameItems = document.querySelectorAll(".section-game__field-item");
@@ -145,6 +135,18 @@ gameForm.addEventListener("submit", (event) => {
             }, 200);
           }
         }
+        setTimeout(() => {
+          if (arrayOfAttempts.length == limiter) {
+            overlay.classList.remove("d-none");
+            overlay.classList.add("d-flex");
+            overlayText.textContent = 'Отлично!'
+            gameField.innerHTML = "";
+            gameOver = true
+            if(gameOver) {
+              clearInterval(timerCooldown);
+            }
+          }
+        }, 200);
       });
     });
   }, 100);
