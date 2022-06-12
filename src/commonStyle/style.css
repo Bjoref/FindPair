@@ -29,3 +29,7 @@ a {
 .d-flex {
   display: flex !important;
 }
+
+.none {
+  display: none !important;
+}
